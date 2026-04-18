@@ -601,33 +601,47 @@ function downloadFile(format) {
 
 // Conversão para Texto Simples (sem tempos)
 function convertToPlainText(srt) {
-  // Remove números de sequência e tempos, mantendo apenas o texto
-  const lines = srt.split('\n');
-  const textLines = [];
+  // Remove números de sequência e tempos, mantendo parágrafos separados
+  // Divide por blocos (dupla quebra de linha no SRT)
+  const blocks = srt.split('\n\n');
+  const textBlocks = [];
   
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
+  for (let block of blocks) {
+    const lines = block.split('\n');
+    const textLines = [];
     
-    // Pula linhas vazias
-    if (line === '') {
-      continue;
+    for (let line of lines) {
+      line = line.trim();
+      
+      // Pula linhas vazias
+      if (line === '') {
+        continue;
+      }
+      
+      // Pula números de sequência (linhas que contêm apenas números)
+      if (/^\d+$/.test(line)) {
+        continue;
+      }
+      
+      // Pula linhas com timecode (HH:MM:SS --> HH:MM:SS)
+      if (line.includes('-->')) {
+        continue;
+      }
+      
+      // Adiciona linhas de texto válidas
+      if (line) {
+        textLines.push(line);
+      }
     }
     
-    // Pula números de sequência (linhas que contêm apenas números)
-    if (/^\d+$/.test(line)) {
-      continue;
+    // Se há texto neste bloco, adiciona como parágrafo
+    if (textLines.length > 0) {
+      textBlocks.push(textLines.join('\n'));
     }
-    
-    // Pula linhas com timecode (HH:MM:SS --> HH:MM:SS)
-    if (line.includes('-->')) {
-      continue;
-    }
-    
-    // Adiciona linhas de texto válidas
-    textLines.push(line);
   }
   
-  return textLines.join('\n').trim();
+  // Retorna com quebra de parágrafo entre blocos (igual ao SRT)
+  return textBlocks.join('\n\n').trim();
 }
 
 // Conversão para VTT
