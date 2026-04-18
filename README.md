@@ -41,6 +41,7 @@ Uma aplicação web completa para criação, validação, correção e preview d
 - **Estatísticas em tempo real**: Contagem de palavras, caracteres e blocos
 - **Presets de configuração**: Presets de timing (Rápido 3s, Normal 5s, Lento 8s, Auto)
 - **Importação em lote**: Suporte para múltiplos arquivos TXT e PDF
+- **Visualização lado a lado**: Previews de SRT e Texto Simples em tempo real para comparação
 
 ### 📤 **Exportação**
 - **Formato SRT**: Padrão de legendas compatível com CapCut e maioria dos players
@@ -130,14 +131,21 @@ Abra seu navegador em: `http://localhost:5000`
    - Clique em "Validar Texto" para verificar ortografia e legibilidade
    - Clique em "Corrigir Texto" para obter sugestões de melhoria
 
-4. **Preview (Opcional)**
+4. **Visualizar Resultados**
+   - Clique em "🚀 Converter para SRT" para gerar as legendas
+   - **Novo**: Veja lado a lado:
+     - **SRT (com timecode)**: No painel esquerdo - incluindo números sequenciais e tempos
+     - **Texto Simples (sem timecode)**: No painel direito - apenas o conteúdo puro
+   - Baixe diretamente dos botões nos previews (📥 Download SRT ou 📥 Download TXT)
+
+5. **Preview (Opcional)**
    - Importe um vídeo/áudio para sincronizar as legendas
    - Visualize em tempo real como as legendas ficarão no vídeo
 
-5. **Exportar**
-   - **SRT**: Clique em "Download SRT" para baixar o arquivo de legendas sincronizado com timecode
-   - **Texto Simples**: Clique em "Texto Simples" para exportar apenas o conteúdo sem tempos (perfeito para scripts, roteiros ou documentação)
-   - **VTT/ASS**: Importe em outros editores que suportam esses formatos
+6. **Exportar**
+   - **SRT**: Clique em "📥 Download SRT" (no painel de preview) para baixar o arquivo de legendas sincronizado com timecode
+   - **Texto Simples**: Clique em "📥 Download TXT" (no painel de preview) para exportar apenas o conteúdo sem tempos
+   - **VTT/ASS**: Use os botões na seção "Preview e Exportação" para outros formatos
    - Importe o arquivo no CapCut ou outro editor de vídeo
 
 ### Exemplos de Conversão
@@ -156,7 +164,9 @@ Abra seu navegador em: `http://localhost:5000`
 
 #### Exportação em Formatos
 
-**SRT (com timecode):**
+**Painel "Previews de Exportação" (lado a lado):**
+
+Lado Esquerdo - **SRT (com timecode):**
 ```
 1
 00:00:00,000 --> 00:00:05,000
@@ -168,13 +178,19 @@ Publicado em quinze de março
 de dois mil e vinte e quatro
 ```
 
-**Texto Simples (sem timecode):**
+Lado Direito - **Texto Simples (sem timecode):**
 ```
 O vídeo tem mil e quinhentas visualizações
 
 Publicado em quinze de março
 de dois mil e vinte e quatro
 ```
+
+**Benefícios desta visualização:**
+- ✅ Compare instantaneamente os dois formatos
+- ✅ Veja como o texto fica sem os tempos
+- ✅ Ideal para preparar scripts ou documentação
+- ✅ Layout responsivo: em telas pequenas fica um sobre o outro
 
 ## 📁 Estrutura do Projeto
 
