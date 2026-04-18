@@ -107,6 +107,31 @@
         <button id="clearBtn">🗑️ Limpar Tudo</button>
       </div>
     </div>
+
+    <!-- Painel de Previews (SRT e Texto Simples) -->
+    <div class="panel">
+      <h3>📋 Previews de Exportação</h3>
+      
+      <div class="preview-container">
+        <!-- Preview SRT -->
+        <div class="preview-section">
+          <h4>📄 SRT (com timecode)</h4>
+          <div class="preview-box" id="srtPreview">
+            Clique em "Converter para SRT" para gerar o arquivo...
+          </div>
+          <button class="format-btn" data-format="srt" style="margin-top: 10px; display: none;" id="srtDownloadBtn">📥 Download SRT</button>
+        </div>
+
+        <!-- Preview Texto Simples -->
+        <div class="preview-section">
+          <h4>📝 Texto Simples (sem timecode)</h4>
+          <div class="preview-box" id="textSimplePreview">
+            Clique em "Converter para SRT" para gerar o arquivo...
+          </div>
+          <button class="format-btn" data-format="txt" style="margin-top: 10px; display: none;" id="txtDownloadBtn">📥 Download TXT</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Painel de Preview e Exportação -->
@@ -145,10 +170,6 @@
           <option value="2">2x</option>
         </select>
       </div>
-    </div>
-
-    <div class="srt-preview" id="srtPreview">
-      Seu arquivo SRT aparecerá aqui após a conversão...
     </div>
 
     <div class="export-options hidden" id="exportOptions">

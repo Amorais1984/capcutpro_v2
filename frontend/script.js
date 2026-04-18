@@ -1,5 +1,6 @@
 // Estado global da aplicação
 let currentSRT = '';
+let currentPlainText = '';
 let currentStats = {};
 let currentMedia = null;
 let subtitleBlocks = [];
@@ -23,6 +24,9 @@ const elements = {
   convertBtn: document.getElementById('convertBtn'),
   clearBtn: document.getElementById('clearBtn'),
   srtPreview: document.getElementById('srtPreview'),
+  textSimplePreview: document.getElementById('textSimplePreview'),
+  srtDownloadBtn: document.getElementById('srtDownloadBtn'),
+  txtDownloadBtn: document.getElementById('txtDownloadBtn'),
   exportOptions: document.getElementById('exportOptions'),
   progressBar: document.getElementById('progressBar'),
   progressFill: document.getElementById('progressFill'),
@@ -495,9 +499,16 @@ elements.convertBtn.addEventListener('click', function() {
       
       const result = converterParaSRTAvancado(texto, config);
       currentSRT = result.srt;
+      currentPlainText = convertToPlainText(currentSRT);
       currentStats = result;
       
+      // Atualiza previews
       elements.srtPreview.textContent = currentSRT;
+      elements.textSimplePreview.textContent = currentPlainText;
+      
+      // Mostra botões de download
+      elements.srtDownloadBtn.style.display = 'block';
+      elements.txtDownloadBtn.style.display = 'block';
       elements.exportOptions.classList.remove('hidden');
       elements.progressBar.classList.add('hidden');
       
@@ -512,12 +523,29 @@ elements.clearBtn.addEventListener('click', function() {
   elements.textoInput.value = '';
   elements.arquivoInput.value = '';
   elements.pdfInput.value = '';
-  elements.srtPreview.textContent = 'Seu arquivo SRT aparecerá aqui após a conversão...';
+  elements.srtPreview.textContent = 'Clique em "Converter para SRT" para gerar o arquivo...';
+  elements.textSimplePreview.textContent = 'Clique em "Converter para SRT" para gerar o arquivo...';
+  elements.srtDownloadBtn.style.display = 'none';
+  elements.txtDownloadBtn.style.display = 'none';
   elements.exportOptions.classList.add('hidden');
   elements.progressBar.classList.add('hidden');
   currentSRT = '';
+  currentPlainText = '';
   updateStats();
 });
+
+// Event listeners para botões de download no painel de previews
+if (elements.srtDownloadBtn) {
+  elements.srtDownloadBtn.addEventListener('click', function() {
+    downloadFile('srt');
+  });
+}
+
+if (elements.txtDownloadBtn) {
+  elements.txtDownloadBtn.addEventListener('click', function() {
+    downloadFile('txt');
+  });
+}
 
 // Botões de exportação (delegação de eventos)
 if (elements.exportOptions) {
