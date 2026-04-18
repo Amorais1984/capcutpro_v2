@@ -233,12 +233,18 @@ button:active {
   border-radius: 12px 12px 0 0;
 }
 
-/* Painel de Previews de Exportação (lado a lado) */
-.container + .panel {
-  margin-left: -20px;
-  margin-right: -20px;
+/* Painel de Previews de Exportação - EXPANDIDO */
+.preview-panel-expanded {
+  margin: 0 -15px 0 -15px;
   padding: 20px;
-  width: calc(100% + 40px);
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
   border-radius: 0;
   margin-bottom: 0;
 }
@@ -339,10 +345,9 @@ button:active {
     gap: 15px;
   }
   
-  .container + .panel {
+  .preview-panel-expanded {
     margin-left: -18px;
     margin-right: -18px;
-    width: calc(100% + 36px);
     padding: 18px;
   }
   
@@ -376,10 +381,9 @@ button:active {
     margin-bottom: 0;
   }
   
-  .container + .panel {
+  .preview-panel-expanded {
     margin-left: -15px;
     margin-right: -15px;
-    width: calc(100% + 30px);
     padding: 15px;
   }
   
@@ -431,10 +435,9 @@ button:active {
     padding: 8px;
   }
   
-  .container + .panel {
+  .preview-panel-expanded {
     margin-left: -12px;
     margin-right: -12px;
-    width: calc(100% + 24px);
     padding: 12px;
   }
   
@@ -508,6 +511,11 @@ button:active {
 [data-theme="dark"] .panel h3 {
   color: #c7a6ff;
   border-bottom-color: #2a1f3b;
+}
+
+[data-theme="dark"] .preview-panel-expanded {
+  background: #121217;
+  border-color: #2a1f3b;
 }
 
 [data-theme="dark"] h1 { color: #d8c8ff; }
