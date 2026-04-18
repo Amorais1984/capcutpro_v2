@@ -44,6 +44,7 @@ Uma aplicação web completa para criação, validação, correção e preview d
 
 ### 📤 **Exportação**
 - **Formato SRT**: Padrão de legendas compatível com CapCut e maioria dos players
+- **Texto Simples**: Exportação em formato texto puro sem tempos (apenas o conteúdo da legenda)
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -134,8 +135,10 @@ Abra seu navegador em: `http://localhost:5000`
    - Visualize em tempo real como as legendas ficarão no vídeo
 
 5. **Exportar**
-   - Clique em "Gerar SRT" para baixar o arquivo de legendas
-   - Importe o SRT no CapCut ou outro editor de vídeo
+   - **SRT**: Clique em "Download SRT" para baixar o arquivo de legendas sincronizado com timecode
+   - **Texto Simples**: Clique em "Texto Simples" para exportar apenas o conteúdo sem tempos (perfeito para scripts, roteiros ou documentação)
+   - **VTT/ASS**: Importe em outros editores que suportam esses formatos
+   - Importe o arquivo no CapCut ou outro editor de vídeo
 
 ### Exemplos de Conversão
 
@@ -150,6 +153,28 @@ Abra seu navegador em: `http://localhost:5000`
 #### Unidades
 - Entrada: "Distância de 50km e peso de 25kg"
 - Saída: "Distância de cinquenta quilômetros e peso de vinte e cinco quilogramas"
+
+#### Exportação em Formatos
+
+**SRT (com timecode):**
+```
+1
+00:00:00,000 --> 00:00:05,000
+O vídeo tem mil e quinhentas visualizações
+
+2
+00:00:07,000 --> 00:00:12,000
+Publicado em quinze de março
+de dois mil e vinte e quatro
+```
+
+**Texto Simples (sem timecode):**
+```
+O vídeo tem mil e quinhentas visualizações
+
+Publicado em quinze de março
+de dois mil e vinte e quatro
+```
 
 ## 📁 Estrutura do Projeto
 

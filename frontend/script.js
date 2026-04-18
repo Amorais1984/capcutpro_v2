@@ -541,6 +541,11 @@ function downloadFile(format) {
     case 'srt':
       filename += '.srt';
       break;
+    case 'txt':
+      content = convertToPlainText(currentSRT);
+      filename += '.txt';
+      mimeType = 'text/plain';
+      break;
     case 'vtt':
       content = convertToVTT(currentSRT);
       filename += '.vtt';
@@ -564,6 +569,43 @@ function downloadFile(format) {
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
+}
+
+// Conversão para Texto Simples (sem tempos)
+function convertToPlainText(srt) {
+  // Remove números de sequência e tempos, mantendo apenas o texto
+  const lines = srt.split('\n');
+  const textLines = [];
+  let skipNext = false;
+  
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    
+    // Pula linhas vazias e linhas com números/tempos
+    if (line === '') {
+      skipNext = false;
+      continue;
+    }
+    
+    // Pula números de sequência (linhas que contêm apenas números)
+    if (/^\d+$/.test(line)) {
+      skipNext = true;
+      continue;
+    }
+    
+    // Pula linhas com timecode (HH:MM:SS --> HH:MM:SS)
+    if (line.includes('-->')) {
+      continue;
+    }
+    
+    // Adiciona o texto
+    if (line && !skipNext) {
+      textLines.push(line);
+      skipNext = false;
+    }
+  }
+  
+  return textLines.join('\n').trim();
 }
 
 // Conversão para VTT
