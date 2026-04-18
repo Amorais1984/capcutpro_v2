@@ -576,20 +576,17 @@ function convertToPlainText(srt) {
   // Remove números de sequência e tempos, mantendo apenas o texto
   const lines = srt.split('\n');
   const textLines = [];
-  let skipNext = false;
   
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim();
     
-    // Pula linhas vazias e linhas com números/tempos
+    // Pula linhas vazias
     if (line === '') {
-      skipNext = false;
       continue;
     }
     
     // Pula números de sequência (linhas que contêm apenas números)
     if (/^\d+$/.test(line)) {
-      skipNext = true;
       continue;
     }
     
@@ -598,11 +595,8 @@ function convertToPlainText(srt) {
       continue;
     }
     
-    // Adiciona o texto
-    if (line && !skipNext) {
-      textLines.push(line);
-      skipNext = false;
-    }
+    // Adiciona linhas de texto válidas
+    textLines.push(line);
   }
   
   return textLines.join('\n').trim();
