@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Teste de Validação</title>
+</head>
+<body>
+    <h1>Teste de Validação</h1>
+    <textarea id="texto" rows="5" cols="50">Este é um texto com acentos: ação, não, coração.</textarea><br><br>
+    <button onclick="testarValidacao()">Testar Validação</button>
+    <div id="resultado"></div>
+
+    <script>
+    async function testarValidacao() {
+        const texto = document.getElementById('texto').value;
+        const resultado = document.getElementById('resultado');
+        
+        try {
+            console.log('Enviando texto:', texto);
+            const response = await fetch('/validar_texto', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8'
+                },
+                body: JSON.stringify({ texto: texto })
+            });
+            
+            console.log('Status da resposta:', response.status);
+            const data = await response.json();
+            console.log('Dados recebidos:', data);
+            
+            if (response.ok) {
+                resultado.innerHTML = '<h3>Sucesso!</h3><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            } else {
+                resultado.innerHTML = '<h3>Erro:</h3><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            resultado.innerHTML = '<h3>Erro de conexão:</h3><p>' + error.message + '</p>';
+        }
+    }
+    </script>
+</body>
+</html>

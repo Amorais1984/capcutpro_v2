@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CapCut SRT Pro - Conversor Avançado</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="header">
+    <h1>🎬 CapCut SRT Pro</h1>
+    <p class="subtitle">Conversor Avançado de Legendas para CapCut</p>
+    <button id="themeToggle" class="theme-toggle" aria-label="Alternar tema">🌙 Modo escuro</button>
+  </div>
+
+  <div class="container">
+    <!-- Painel de Entrada -->
+    <div class="panel">
+      <h3>📝 Entrada de Texto</h3>
+      
+      <div class="input-group">
+        <label for="arquivoInput">Importar arquivos .txt:</label>
+        <input type="file" id="arquivoInput" accept=".txt" multiple />
+      </div>
+
+      <div class="input-group">
+        <label for="pdfInput">Importar arquivos PDF:</label>
+        <input type="file" id="pdfInput" accept=".pdf" multiple />
+      </div>
+
+      <div class="input-group">
+        <label for="mediaInput">Importar áudio/vídeo:</label>
+        <input type="file" id="mediaInput" accept=".mp3,.wav,.mp4,.avi,.mov,.mkv" />
+        <div id="mediaInfo" class="media-info hidden"></div>
+      </div>
+
+      <div class="input-group">
+        <label for="textoInput">Ou cole seu roteiro:</label>
+        <textarea id="textoInput" placeholder="Cole seu roteiro aqui ou use o botão acima para importar arquivos..."></textarea>
+      </div>
+
+      <div class="stats">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-value" id="wordCount">0</div>
+            <div class="stat-label">Palavras</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="charCount">0</div>
+            <div class="stat-label">Caracteres</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="estimatedBlocks">0</div>
+            <div class="stat-label">Blocos</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="totalDuration">0s</div>
+            <div class="stat-label">Duração</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Painel de Configurações -->
+    <div class="panel">
+      <h3>⚙️ Configurações de Timing</h3>
+      
+      <div class="input-group">
+        <label>Presets Rápidos:</label>
+        <div class="presets">
+          <button class="preset-btn" data-duration="3" data-interval="1">Rápido (3s)</button>
+          <button class="preset-btn active" data-duration="5" data-interval="2">Normal (5s)</button>
+          <button class="preset-btn" data-duration="8" data-interval="3">Lento (8s)</button>
+          <button class="preset-btn" data-duration="auto">Auto</button>
+        </div>
+      </div>
+
+      <div class="timing-controls">
+        <div class="timing-group">
+          <label for="duracao">Duração por bloco (seg):</label>
+          <input type="number" id="duracao" value="5" min="1" max="30" />
+        </div>
+        <div class="timing-group">
+          <label for="intervalo">Intervalo entre blocos (seg):</label>
+          <input type="number" id="intervalo" value="2" min="0" max="10" />
+        </div>
+      </div>
+
+      <div class="timing-controls">
+        <div class="timing-group">
+          <label for="maxCharsPerLine">Máx. caracteres por linha:</label>
+          <input type="number" id="maxCharsPerLine" value="35" min="20" max="50" />
+        </div>
+        <div class="timing-group">
+          <label for="maxLinesPerBlock">Máx. linhas por bloco:</label>
+          <input type="number" id="maxLinesPerBlock" value="2" min="1" max="3" />
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button id="validarBtn">✅ Validar Texto</button>
+        <button id="corrigirBtn">🔧 Corrigir Texto</button>
+      </div>
+      
+      <div class="button-group">
+        <button id="convertBtn">🚀 Converter para SRT</button>
+        <button id="clearBtn">🗑️ Limpar Tudo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Painel de Preview e Exportação -->
+  <div class="panel preview-panel">
+    <h3>👀 Preview e Exportação</h3>
+    
+    <div class="progress-bar hidden" id="progressBar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- Seção de Validação -->
+    <div class="validation-results hidden" id="validationResults">
+      <h4>📊 Resultados da Validação</h4>
+      <div id="validationContent"></div>
+    </div>
+
+    <!-- Player de Mídia -->
+    <div class="media-player hidden" id="mediaPlayer">
+      <h4>🎬 Preview com Mídia</h4>
+      <div class="media-container">
+        <video id="videoPlayer" class="hidden" controls></video>
+        <audio id="audioPlayer" class="hidden" controls></audio>
+      </div>
+      <div class="subtitle-overlay" id="subtitleOverlay"></div>
+      <div class="player-controls">
+        <button id="playBtn">▶️ Play</button>
+        <button id="pauseBtn">⏸️ Pause</button>
+        <button id="stopBtn">⏹️ Stop</button>
+        <input type="range" id="progressSlider" min="0" max="100" value="0" class="progress-slider">
+        <select id="speedControl" class="speed-control">
+          <option value="0.5">0.5x</option>
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="srt-preview" id="srtPreview">
+      Seu arquivo SRT aparecerá aqui após a conversão...
+    </div>
+
+    <div class="export-options hidden" id="exportOptions">
+      <button class="format-btn" data-format="srt">📄 Download SRT</button>
+      <button class="format-btn" data-format="vtt">🎞️ Download VTT</button>
+      <button class="format-btn" data-format="ass">🎨 Download ASS</button>
+      <button class="format-btn" data-format="zip">📦 Download ZIP</button>
+      
+      <div class="split-options">
+        <h4>Dividir SRT em partes:</h4>
+        <div class="input-group">
+          <label for="splitParts">Número de partes:</label>
+          <input type="number" id="splitParts" value="2" min="2" max="50" />
+        </div>
+        <button id="splitBtn" class="format-btn">✂️ Dividir SRT</button>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <p>&copy; 2025 Adriano Morais. Todos os direitos reservados.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
